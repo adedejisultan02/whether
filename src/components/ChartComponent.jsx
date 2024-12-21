@@ -25,10 +25,9 @@ const ChartComponent = ({ data, filters }) => {
 
   useEffect(() => {
     if (!data || !data.days || data.days.length === 0) {
-      return; // No data available
+      return; 
     }
 
-    // Find the selected day
     const selectedDay = data.days.find((day) => {
       const dayDate = new Date(`${day.datetime}T12:00:00`);
       const dayName = dayDate.toLocaleDateString('en-US', { weekday: 'long' });
@@ -36,10 +35,9 @@ const ChartComponent = ({ data, filters }) => {
     });
 
     if (!selectedDay || !selectedDay.hours) {
-      return; // No hourly data available
+      return; 
     }
 
-    // Determine the filtered hours based on the selected time range
     const fullHours = selectedDay.hours;
 
     const filteredHours = fullHours.filter((hour) => {
@@ -51,38 +49,34 @@ const ChartComponent = ({ data, filters }) => {
     });
 
     if (filteredHours.length === 0) {
-      return; // No filtered hours match the criteria
+      return; 
     }
 
-    // Identify the indices of the first and last filtered hour in the full dataset
     const firstFilteredHour = filteredHours[0];
     const lastFilteredHour = filteredHours[filteredHours.length - 1];
 
     const firstFilteredIndex = fullHours.findIndex(h => h.datetime === firstFilteredHour.datetime);
     const lastFilteredIndex = fullHours.findIndex(h => h.datetime === lastFilteredHour.datetime);
 
-    // Extend the range by 2 hours before and after if possible
     const extendedStartIndex = Math.max(firstFilteredIndex - 2, 0);
     const extendedEndIndex = Math.min(lastFilteredIndex + 2, fullHours.length - 1);
 
     const extendedHours = fullHours.slice(extendedStartIndex, extendedEndIndex + 1);
 
     if (extendedHours.length === 0) {
-      return; // No data to display after extending
+      return; 
     }
 
-    // Destroy the existing chart if it exists to prevent duplication
+
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
     }
 
-    // Prepare the chart data from the extended range
     const labels = extendedHours.map((hour) => hour.datetime);
     const temperatures = extendedHours.map((hour) => hour.temp);
     const precipitation = extendedHours.map((hour) => hour.precipprob);
     const windSpeeds = extendedHours.map((hour) => hour.windspeed);
 
-    // Set up vertical lines at the start and end of the filtered range
     const startFilterLabel = firstFilteredHour.datetime;
     const endFilterLabel = lastFilteredHour.datetime;
 
@@ -130,9 +124,9 @@ const ChartComponent = ({ data, filters }) => {
                 value: startFilterLabel,
                 borderColor: 'black',
                 borderWidth: 2,
-                borderDash: [4, 4], // make line dotted
+                borderDash: [4, 4],
                 label: {
-                  enabled: false, // no label text, remove if you want a label
+                  enabled: false,
                 },
               },
               filteredRangeEnd: {
@@ -141,9 +135,9 @@ const ChartComponent = ({ data, filters }) => {
                 value: endFilterLabel,
                 borderColor: 'black',
                 borderWidth: 2,
-                borderDash: [4, 4], // make line dotted
+                borderDash: [4, 4], 
                 label: {
-                  enabled: false, // no label text, remove if you want a label
+                  enabled: false, 
                 },
               },
             },
@@ -156,7 +150,7 @@ const ChartComponent = ({ data, filters }) => {
               text: `${filters.time}`,
             },
             grid: {
-              display: false, // remove x-axis grid lines
+              display: false,
             },
           },
           y: {
@@ -165,7 +159,7 @@ const ChartComponent = ({ data, filters }) => {
             //   text: 'Value',
             },
             grid: {
-              display: false, // remove y-axis grid lines
+              display: false, 
             },
           },
         },

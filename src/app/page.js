@@ -86,7 +86,6 @@ const WeatherContainer = styled.div`
     gap: 10px;
     justify-content: center;
 `
-// style={{ display: 'flex', gap: '1.5rem' }}
 
 export default function HomePage() {
   const [weatherData, setWeatherData] = useState(null);
