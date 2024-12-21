@@ -181,7 +181,7 @@ export default function HomePage() {
           {weatherData && (
             <WeatherPanel>
               <WeatherSummary
-                title={`This ${filters.day} - ${filters.time} (Week offset: ${weekOffset})`}
+                title={`This ${filters.day} - ${filters.time}`}
                 data={weatherData}
                 filters={filters}
                 color='red'
@@ -192,7 +192,7 @@ export default function HomePage() {
           {comparisonData && (
             <WeatherPanel>
               <WeatherSummary
-                title={`Next ${filters.day} - ${filters.time} (Week offset: ${weekOffset + 1})`}
+                title={`Next ${filters.day} - ${filters.time}`}
                 data={comparisonData}
                 filters={filters}
               />
