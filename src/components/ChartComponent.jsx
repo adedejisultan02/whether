@@ -44,9 +44,9 @@ const ChartComponent = ({ data, filters }) => {
 
     const filteredHours = fullHours.filter((hour) => {
       const hourNumber = parseInt(hour.datetime.split(':')[0], 10);
-      if (filters.time === 'Morning') return hourNumber >= 8 && hourNumber < 12;
-      if (filters.time === 'Afternoon') return hourNumber >= 12 && hourNumber < 17;
-      if (filters.time === 'Evening') return hourNumber >= 17 && hourNumber < 21;
+      if (filters.time === 'Morning') return hourNumber >= 8 && hourNumber <= 12;
+      if (filters.time === 'Afternoon') return hourNumber >= 12 && hourNumber <= 17;
+      if (filters.time === 'Evening') return hourNumber >= 17 && hourNumber <= 21;
       return false;
     });
 
